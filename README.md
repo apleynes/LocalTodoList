@@ -4,6 +4,18 @@ A barebones to-do list Flask webapp. No javascript, just HTML and CSS.
 
 Intended for secure local deployments. 
 
+`pip install -r requirements.txt`
+
+Run the app fully locally:
+
+`flask run`
+
+Run the app visible over local network:
+
+`flask run --host 0.0.0.0 --port 8888`
+
+Change the port number as desired.
+
 ### Disclaimer
 
 This open source software is provided "as is", without warranty of any kind, 
