@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>Simple To-Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .task a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .task-form {
+            display: flex;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .task-input {
+            flex-grow: 1;
+            padding: 12px;
+            margin-right: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+        }
+
+        button {
+            padding: 12px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            min-height: 44px; /* Better for touch targets */
+        }
+
+        .actions {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .actions button {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .actions button.secondary {
+            background-color: #607D8B;
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .task-form {
+                flex-direction: column;
+            }
+
+            .task-input {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .task {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <form class="task-form" action="/add?show_done={{ 'true' if show_done else 'false' }}" method="post">
+        <label>
+            <input type="text" name="task" placeholder="Add a new task" class="task-input" required>
+        </label>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <div class="actions">
+        <a href="/toggle-show-done?show_done={{ 'true' if show_done else 'false' }}">
+            <button type="button" class="secondary">
+                {{ "Hide" if show_done else "Show" }} Completed Tasks
+            </button>
+        </a>
+        <a href="/clear-done?show_done={{ 'true' if show_done else 'false' }}">
+            <button type="button" class="secondary">Clear Completed Tasks</button>
+        </a>
+    </div>
+
+    <div class="tasks">
+        {% for task in tasks %}
+            {% if show_done or not task.done %}
+                <div class="task {% if task.done %}done{% endif %}">
+                    <a href="/toggle/{{ loop.index0 }}?show_done={{ 'true' if show_done else 'false' }}">
+                        [{{ "✓" if task.done else " " }}] {{ task.text }}
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>
