@@ -2,6 +2,8 @@
 
 A barebones to-do list Flask webapp. No javascript, just HTML and CSS.
 
+![A screenshot of the to-do list webapp](static/screenshot.png "To-do List")
+
 Intended for secure local deployments. 
 
 `pip install -r requirements.txt`
@@ -15,6 +17,8 @@ Run the app visible over local network:
 `flask run --host 0.0.0.0 --port 8888`
 
 Change the port number as desired.
+
+Tasks are stored in a local file `tasks.txt` and cleared completed tasks are stored in `done-tasks.txt`
 
 ### Disclaimer
 
